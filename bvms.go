@@ -2,31 +2,31 @@
 package bvms
 
 import (
-	"encoding/base64"
 	"bytes"
+	"encoding/base64"
+	"fmt"
 	"github.com/btcsuite/btcd/btcec"
-	"github.com/btcsuite/btcutil"
 	"github.com/btcsuite/btcd/chaincfg"
 	"github.com/btcsuite/btcd/chaincfg/chainhash"
 	"github.com/btcsuite/btcd/wire"
-	"fmt"
+	"github.com/btcsuite/btcutil"
 )
 
 const (
-	MainNetID = 1
+	MainNetID       = 1
 	RegressionNetID = 2
-	TestNet3ID = 3
-	SimNetID = 4
+	TestNet3ID      = 3
+	SimNetID        = 4
 )
 
-var nets = []*chaincfg.Params {
+var nets = []*chaincfg.Params{
 	&chaincfg.MainNetParams,
 	&chaincfg.RegressionNetParams,
 	&chaincfg.TestNet3Params,
 	&chaincfg.SimNetParams,
 }
 
-func VerifyMessage( addr, signature, message string ) (error, int) {
+func VerifyMessage(addr, signature, message string) (error, int) {
 	// Decode base64 signature.
 	sig, err := base64.StdEncoding.DecodeString(signature)
 	if err != nil {
@@ -64,14 +64,14 @@ func VerifyMessage( addr, signature, message string ) (error, int) {
 		}
 
 		if address.EncodeAddress() == addr {
-			return nil, i+1
+			return nil, i + 1
 		}
 	}
 
 	return fmt.Errorf("The Signature Message Verification Failed."), 0
 }
 
-func IsValidAddress( address string ) bool {
+func IsValidAddress(address string) bool {
 	// Decode the provided address.
 	for _, net := range nets {
 		addr, err := btcutil.DecodeAddress(address, net)

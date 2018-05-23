@@ -1,25 +1,25 @@
 package bvms
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 var verifySignDatas = []struct {
-	sig string
-	msg string
+	sig  string
+	msg  string
 	addr string
 	want bool
-	net int
+	net  int
 }{
 	//error
-	{"a","","",false, 0},
-	{"test","","",false, 0},
-	{"IM30GkRoKvK57U3xUsw3XOWnnLqrltf5Z3GuKAOJCu4oVJiQZ2RBfrdzpHZ7u9YkdDW2lWptLJS7ARp3nAY4PeQ=","test","1nLsDVQyMQosdnBgLStXH1si8BP5xzKvbG",false, 0},
+	{"a", "", "", false, 0},
+	{"test", "", "", false, 0},
+	{"IM30GkRoKvK57U3xUsw3XOWnnLqrltf5Z3GuKAOJCu4oVJiQZ2RBfrdzpHZ7u9YkdDW2lWptLJS7ARp3nAY4PeQ=", "test", "1nLsDVQyMQosdnBgLStXH1si8BP5xzKvbG", false, 0},
 
 	//succ
-	{"IM30GkRoKvK57U3xUsw3XOWnnLqrltf5Z3GuKAOJCu4oVJiQZ2RBfrdzpHZ7u9YkdDW2lWptLJS7ARp3nAY4PeQ=","test","mnLsDVQyMQosdnBgLStXH1si8BP5xzKvbG",true, RegressionNetID},
-	{"IMSmaKvkv+RX6RUM87v4Brw5KvLdU/GFEZm6sl4lFWBVE2G7EVylg7Hrv4azrXkfvReJZ6WRkYTOt7Sjm1dOcZc=","this is a test", "1L3MNP8e4NSt5RFWCE6UuyyPRYW9kaAZ8C", true, MainNetID},
+	{"IM30GkRoKvK57U3xUsw3XOWnnLqrltf5Z3GuKAOJCu4oVJiQZ2RBfrdzpHZ7u9YkdDW2lWptLJS7ARp3nAY4PeQ=", "test", "mnLsDVQyMQosdnBgLStXH1si8BP5xzKvbG", true, RegressionNetID},
+	{"IMSmaKvkv+RX6RUM87v4Brw5KvLdU/GFEZm6sl4lFWBVE2G7EVylg7Hrv4azrXkfvReJZ6WRkYTOt7Sjm1dOcZc=", "this is a test", "1L3MNP8e4NSt5RFWCE6UuyyPRYW9kaAZ8C", true, MainNetID},
 }
 
 var netnames = []string{
@@ -44,31 +44,31 @@ func TestVerifyMessages(t *testing.T) {
 		var pass bool
 		if err != nil {
 			pass = false
-		}else {
+		} else {
 			pass = true
 		}
 
 		if pass != vsd.want {
 			t.Errorf("result want:%v, %v.", pass, err)
-		}else if pass == true && net != vsd.net {
-			t.Errorf("net want:%s, got:%s.", getNetName(vsd.net), getNetName(net) )
+		} else if pass == true && net != vsd.net {
+			t.Errorf("net want:%s, got:%s.", getNetName(vsd.net), getNetName(net))
 		}
 	}
 }
 
-var addressDatas = [] struct {
+var addressDatas = []struct {
 	address string
-	want bool
-} {
+	want    bool
+}{
 	//error
 	{"", false},
 	{"123", false},
-	{"bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej",false},
+	{"bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej", false},
 	{"mnLsDVQyMQosdnBgLStXH1si8BP5xzKvbGf", false},
 	{"364CuAH97GvzFFfnhrbLQArPDUyCKmokZz", false},
 
-	{"1111111111111111111114oLvT2",true},
-	{"1234567yy2wy6LuJbf9G2NfCtjRvqCHGFR",true},
+	{"1111111111111111111114oLvT2", true},
+	{"1234567yy2wy6LuJbf9G2NfCtjRvqCHGFR", true},
 	{"188888888ikzoy8jmR2byT4WoQsycLxeUH", true},
 	{"mnLsDVQyMQosdnBgLStXH1si8BP5xzKvbG", true},
 	{"1L3MNP8e4NSt5RFWCE6UuyyPRYW9kaAZ8C", true},
